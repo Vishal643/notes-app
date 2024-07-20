@@ -1,3 +1,4 @@
+/* Ensure body has a box-sizing setting */
 body {
 	font-family: Arial, sans-serif;
 	background-color: #f1f3f4;
@@ -6,8 +7,12 @@ body {
 	box-sizing: border-box;
 }
 
+/* App Container */
 .app {
-	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	overflow: hidden;
 }
 
 /* Sidebar Styles */
@@ -16,14 +21,18 @@ body {
 	background-color: #f1f1f1;
 	padding: 10px;
 	position: fixed;
-	height: 100%;
+	height: calc(100vh - 60px); /* Adjust height to account for the navbar */
+	top: 60px; /* Position below the navbar */
+	left: 0;
 	overflow-y: auto;
-	transition: transform 0.3s ease;
+	transition: transform 0.3s ease, visibility 0.3s ease; /* Add transition for visibility */
 	box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+	z-index: 2; /* Ensure it is above other content */
 }
 
 .sidebar.hidden {
 	transform: translateX(-100%);
+	visibility: hidden; /* Hide the sidebar completely */
 }
 
 .sidebar ul {
@@ -74,15 +83,17 @@ body {
 
 /* Main Content Styles */
 .main-content {
-	display: flex;
-	flex-direction: column;
-	margin-top: 60px;
+	margin-top: 60px; /* Margin to avoid overlap with the navbar */
+	margin-left: 220px; /* Margin to account for the sidebar */
 	padding: 20px;
 	box-sizing: border-box;
+	flex-grow: 1; /* Allow it to grow and fill available space */
+	overflow-y: auto; /* Ensure content scrolls if it overflows */
 }
 
+/* Adjustments when sidebar is hidden */
 .main-content-with-sidebar {
-	margin-left: 220px; /* Adjusted for sidebar */
+	margin-left: 0;
 }
 
 /* Notes Section Styles */
@@ -271,7 +282,12 @@ body {
 	}
 
 	.sidebar {
-		width: 150px;
+		width: 250px; /* Adjust width for better visibility on mobile */
+	}
+
+	.sidebar.hidden {
+		width: 0;
+		overflow: hidden; /* Hide overflow when sidebar is hidden */
 	}
 
 	.main-content {
@@ -305,11 +321,11 @@ body {
 	.navbar-toggle {
 		display: block;
 		position: absolute;
-		left: 0px;
+		left: 10px;
 		top: 10px;
 		cursor: pointer;
 		padding: 5px;
 		font-size: 18px;
-		margin-right: 5px;
+		z-index: 3; /* Ensure it is above other content */
 	}
 }

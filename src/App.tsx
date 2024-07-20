@@ -12,15 +12,16 @@ const App: React.FC = () => {
 	const handleToggleSidebar = () => {
 		setSidebarVisible(!isSidebarVisible);
 	};
+
 	return (
 		<Provider store={store}>
-			<div className='app'>
+			<div
+				className={`app ${
+					isSidebarVisible ? '' : 'main-content-with-sidebar'
+				}`}>
 				<Navbar onToggleSidebar={handleToggleSidebar} />
-				<Sidebar className={isSidebarVisible ? '' : 'hidden'} />
-				<div
-					className={`main-content   ${
-						isSidebarVisible ? 'main-content-with-sidebar' : ''
-					}`}>
+				<Sidebar isVisible={isSidebarVisible} />
+				<div className='main-content'>
 					<NotesContainer />
 				</div>
 			</div>

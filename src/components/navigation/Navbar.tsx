@@ -13,18 +13,18 @@ const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar }) => {
 	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const query = e.target.value;
 		setSearch(query);
-		dispatch(setSearchQuery(query)); // Dispatch the action to Redux
+		dispatch(setSearchQuery(query));
 	};
 
 	return (
 		<div className='navbar'>
-			<span className='navbar-logo'>My Notes</span>
+			<span className='navbar-logo'>Notes</span>
 			<input
 				type='text'
 				className='navbar-search'
 				placeholder='Search notes...'
 				value={search}
-				onChange={handleSearchChange} // Connect to handleSearchChange function
+				onChange={handleSearchChange}
 			/>
 			<button className='navbar-toggle' onClick={onToggleSidebar}>
 				☰
