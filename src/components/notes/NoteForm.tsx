@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { addNote } from '../../features/redux/notesSlice';
 import { v4 as uuidv4 } from 'uuid';
@@ -6,7 +6,8 @@ import { v4 as uuidv4 } from 'uuid';
 const NoteForm: React.FC = () => {
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
-	const [imageUrl, setImageUrl] = useState(''); // New state for image URL
+	const [imageUrl, setImageUrl] = useState('');
+	const [color, setColor] = useState('#ffffff');
 	const [hasClickedOnForm, setHasClickedOnForm] = useState(false);
 	const formRef = useRef<HTMLDivElement>(null);
 
@@ -22,17 +23,17 @@ const NoteForm: React.FC = () => {
 					content,
 					pinned: false,
 					imageUrl,
+					backgroundColor: color,
 				}),
 			);
-			// Reset form state after submission
 			setTitle('');
 			setContent('');
 			setImageUrl('');
+			setColor('#ffffff');
 			setHasClickedOnForm(false);
 		}
 	};
 
-	// on clicking outside the form, set hasClickedOnForm to false
 	const handleClickOutside = (event: MouseEvent) => {
 		if (formRef.current && !formRef.current.contains(event.target as Node)) {
 			setHasClickedOnForm(false);
@@ -69,18 +70,24 @@ const NoteForm: React.FC = () => {
 					onClick={() => setHasClickedOnForm(true)}
 				/>
 				{hasClickedOnForm && (
-					<input
-						className='note-form-image'
-						type='text'
-						placeholder='Image URL'
-						value={imageUrl}
-						onChange={(e) => setImageUrl(e.target.value)}
-					/>
-				)}
-				{hasClickedOnForm && (
-					<button className='note-form-button' type='submit'>
-						Add Note
-					</button>
+					<>
+						<input
+							className='note-form-image'
+							type='text'
+							placeholder='Image URL'
+							value={imageUrl}
+							onChange={(e) => setImageUrl(e.target.value)}
+						/>
+						<input
+							className='note-form-color'
+							type='color'
+							value={color}
+							onChange={(e) => setColor(e.target.value)}
+						/>
+						<button className='note-form-button' type='submit'>
+							Add Note
+						</button>
+					</>
 				)}
 			</div>
 		</form>

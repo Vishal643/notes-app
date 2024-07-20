@@ -25,6 +25,7 @@ const NoteList: React.FC = () => {
 					content={note.content}
 					pinned={note.pinned}
 					imageUrl={note.imageUrl}
+					backgroundColor={note.backgroundColor}
 				/>
 			))}
 		</div>
