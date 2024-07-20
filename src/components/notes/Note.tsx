@@ -1,23 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
 	editNote,
 	deleteNote,
 	togglePinNote,
-} from '../features/notes/notesSlice';
-import Modal from './Modal';
+} from '../../features/notes/notesSlice';
+import Modal from '../Modal';
 
 interface NoteProps {
 	id: string;
 	title: string;
 	content: string;
 	pinned: boolean;
+	imageUrl?: string; // Add imageUrl prop
 }
 
-const Note: React.FC<NoteProps> = ({ id, title, content, pinned }) => {
+const Note: React.FC<NoteProps> = ({
+	id,
+	title,
+	content,
+	pinned,
+	imageUrl,
+}) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const [editTitle, setEditTitle] = useState(title);
 	const [editContent, setEditContent] = useState(content);
+	const [editImageUrl, setEditImageUrl] = useState(imageUrl);
 	const [hasClickedOnForm, setHasClickedOnForm] = useState(false);
 
 	const dispatch = useDispatch();
@@ -29,6 +37,7 @@ const Note: React.FC<NoteProps> = ({ id, title, content, pinned }) => {
 				title: editTitle,
 				content: editContent,
 				pinned,
+				imageUrl: editImageUrl,
 			}),
 		);
 		setIsEditing(false);
@@ -38,6 +47,11 @@ const Note: React.FC<NoteProps> = ({ id, title, content, pinned }) => {
 		dispatch(deleteNote(id));
 	};
 
+	useEffect(() => {
+		setEditImageUrl(imageUrl || '');
+		setEditTitle(title);
+		setEditContent(content);
+	}, [title, content, imageUrl]);
 	return (
 		<div className={`note ${pinned ? 'pinned' : ''}`}>
 			<Modal isOpen={isEditing} onClose={() => setIsEditing(false)}>
@@ -58,7 +72,15 @@ const Note: React.FC<NoteProps> = ({ id, title, content, pinned }) => {
 						onChange={(e) => setEditContent(e.target.value)}
 						onClick={() => setHasClickedOnForm(true)}
 					/>
-
+					{hasClickedOnForm && (
+						<input
+							className='note-form-image'
+							type='text'
+							placeholder='Image URL'
+							value={editImageUrl}
+							onChange={(e) => setEditImageUrl(e.target.value)}
+						/>
+					)}
 					<div>
 						<button className='note-form-button' onClick={handleEdit}>
 							Save
@@ -73,6 +95,7 @@ const Note: React.FC<NoteProps> = ({ id, title, content, pinned }) => {
 			</Modal>
 
 			<div className='note-content' onClick={() => setIsEditing(true)}>
+				{imageUrl && <img src={imageUrl} alt='Note' className='note-image' />}
 				<h3>{title}</h3>
 				<p>{content}</p>
 			</div>

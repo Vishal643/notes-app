@@ -1,6 +1,6 @@
 import React from 'react';
-import NoteForm from '../../components/NoteForm';
-import NoteList from '../../components/NoteList';
+import NoteForm from '../../components/notes/NoteForm';
+import NoteList from '../../components/notes/NoteList';
 
 const NotesContainer: React.FC = () => {
 	return (

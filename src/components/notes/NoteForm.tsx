@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addNote } from '../features/notes/notesSlice';
+import { addNote } from '../../features/notes/notesSlice';
 import { v4 as uuidv4 } from 'uuid';
 
 const NoteForm: React.FC = () => {
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
+	const [imageUrl, setImageUrl] = useState(''); // New state for image URL
 	const [hasClickedOnForm, setHasClickedOnForm] = useState(false);
 
 	const dispatch = useDispatch();
@@ -19,11 +20,14 @@ const NoteForm: React.FC = () => {
 					title,
 					content,
 					pinned: false,
+					imageUrl,
 				}),
 			);
+			// Reset form state after submission
 			setTitle('');
 			setContent('');
-			setHasClickedOnForm(false); // Reset form state after submission
+			setImageUrl('');
+			setHasClickedOnForm(false);
 		}
 	};
 
@@ -48,6 +52,15 @@ const NoteForm: React.FC = () => {
 					onChange={(e) => setContent(e.target.value)}
 					onClick={() => setHasClickedOnForm(true)}
 				/>
+				{hasClickedOnForm && (
+					<input
+						className='note-form-image'
+						type='text'
+						placeholder='Image URL'
+						value={imageUrl}
+						onChange={(e) => setImageUrl(e.target.value)}
+					/>
+				)}
 				{hasClickedOnForm && (
 					<button className='note-form-button' type='submit'>
 						Add Note
