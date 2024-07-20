@@ -5,10 +5,19 @@ import Note from './Note';
 
 const NoteList: React.FC = () => {
 	const notes = useSelector((state: RootState) => state.notes.notes);
-	console.log('notes', notes);
+	const searchQuery = useSelector(
+		(state: RootState) => state.notes.searchQuery,
+	);
+
+	const filteredNotes = notes.filter(
+		(note) =>
+			note?.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			note.content.toLowerCase().includes(searchQuery.toLowerCase()),
+	);
+
 	return (
 		<div className='note-list'>
-			{notes.map((note) => (
+			{filteredNotes.map((note) => (
 				<Note
 					key={note.id}
 					id={note.id}

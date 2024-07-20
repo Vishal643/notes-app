@@ -1,13 +1,14 @@
 import React from 'react';
 
-const Sidebar: React.FC = () => {
+interface SidebarProps {
+	className?: string;
+}
+const Sidebar: React.FC<SidebarProps> = ({ className }) => {
 	return (
-		<div className='sidebar'>
+		<div className={`sidebar ${className}`}>
 			<ul>
 				<li>Notes</li>
-				<li>Reminders</li>
-				<li>Labels</li>
-				<li>Archive</li>
+				<li>Pinned</li>
 				<li>Trash</li>
 			</ul>
 		</div>

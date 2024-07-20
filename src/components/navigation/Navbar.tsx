@@ -2,25 +2,33 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setSearchQuery } from '../../features/notes/notesSlice';
 
-const Navbar: React.FC = () => {
-	const [searchQuery, setSearchQuery] = useState('');
+interface NavbarProps {
+	onToggleSidebar: () => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar }) => {
+	const [search, setSearch] = useState('');
 	const dispatch = useDispatch();
 
 	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setSearchQuery(e.target.value);
-		dispatch(setSearchQuery(e.target.value));
+		const query = e.target.value;
+		setSearch(query);
+		dispatch(setSearchQuery(query)); // Dispatch the action to Redux
 	};
 
 	return (
 		<div className='navbar'>
-			<div className='navbar-logo'>My Keep</div>
+			<span className='navbar-logo'>My Notes</span>
 			<input
-				className='navbar-search'
 				type='text'
-				placeholder='Search'
-				value={searchQuery}
-				onChange={handleSearchChange}
+				className='navbar-search'
+				placeholder='Search notes...'
+				value={search}
+				onChange={handleSearchChange} // Connect to handleSearchChange function
 			/>
+			<button className='navbar-toggle' onClick={onToggleSidebar}>
+				☰
+			</button>
 		</div>
 	);
 };
