@@ -30,11 +30,12 @@ const notesSlice = createSlice({
 			state.notes = state.notes.filter((note) => note.id !== action.payload);
 		},
 		editNote: (state, action: PayloadAction<Note>) => {
-			const { id, title, content } = action.payload;
+			const { id, title, content, imageUrl } = action.payload;
 			const existingNote = state.notes.find((note) => note.id === id);
 			if (existingNote) {
 				existingNote.title = title;
 				existingNote.content = content;
+				existingNote.imageUrl = imageUrl;
 			}
 		},
 		togglePinNote: (state, action: PayloadAction<string>) => {

@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setSearchQuery } from '../../features/notes/notesSlice';
+import { setSearchQuery } from '../../features/redux/notesSlice';
 
-interface NavbarProps {
-	onToggleSidebar: () => void;
-}
-
-const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar }) => {
+const Navbar: React.FC = () => {
 	const [search, setSearch] = useState('');
 	const dispatch = useDispatch();
 
@@ -26,9 +22,6 @@ const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar }) => {
 				value={search}
 				onChange={handleSearchChange}
 			/>
-			<button className='navbar-toggle' onClick={onToggleSidebar}>
-				☰
-			</button>
 		</div>
 	);
 };

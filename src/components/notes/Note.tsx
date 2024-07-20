@@ -4,7 +4,7 @@ import {
 	editNote,
 	deleteNote,
 	togglePinNote,
-} from '../../features/notes/notesSlice';
+} from '../../features/redux/notesSlice';
 import Modal from '../Modal';
 
 interface NoteProps {
@@ -12,7 +12,7 @@ interface NoteProps {
 	title: string;
 	content: string;
 	pinned: boolean;
-	imageUrl?: string; // Add imageUrl prop
+	imageUrl?: string;
 }
 
 const Note: React.FC<NoteProps> = ({
@@ -52,6 +52,7 @@ const Note: React.FC<NoteProps> = ({
 		setEditTitle(title);
 		setEditContent(content);
 	}, [title, content, imageUrl]);
+
 	return (
 		<div className={`note ${pinned ? 'pinned' : ''}`}>
 			<Modal isOpen={isEditing} onClose={() => setIsEditing(false)}>
